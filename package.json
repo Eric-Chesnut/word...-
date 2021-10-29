@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Eric-Chesnut/word...-#readme",
   "devDependencies": {
     "hardhat": "^2.6.7"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0"
   }
 }
