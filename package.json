@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/Eric-Chesnut/word...-#readme",
   "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@openzeppelin/contracts": "^4.3.2",
+    "ethers": "^5.0.0",
     "hardhat": "^2.6.7"
   },
   "dependencies": {

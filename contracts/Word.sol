@@ -38,7 +38,7 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	
 	//mint a word for free, when free is available ***INCOMPLETE***
 	//also make it so people that already have a word can't claim free words
-	function freeWord(uint256 tokenID) public nonReentrant {
+	function freeWord(uint256 tokenId) public nonReentrant {
 		require(freeWords > 0);
 		_safeMint(_msgSender(), tokenId);
 	}
