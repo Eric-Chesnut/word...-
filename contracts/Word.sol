@@ -9,11 +9,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	
 	uint32 freeWords;
+	uint32 wordsMade;
 	
 	
 	constructor (string memory _name, string memory _symbol) ERC721(_name, _symbol) Ownable()
     {
-		
+		wordsMade = 0;
+		freeWords = 1;
+		_safeMint(_msgSender(), 0);
     }
 	
 	function random(string memory input) internal pure returns (uint256) {
@@ -33,13 +36,16 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 		payable(owner()).transfer(msg.value);
 
 		///owner.transfer(msg.value);
+		wordsMade+=1;
 		_safeMint(_msgSender(), tokenId);
 	}
 	
 	//mint a word for free, when free is available ***INCOMPLETE***
 	//also make it so people that already have a word can't claim free words
 	function freeWord(uint256 tokenId) public nonReentrant {
-		require(freeWords > 0);
+		//require(freeWords > 0);
+		//require(balanceOf(msg.sender) == 0);
+		wordsMade+=1;
 		_safeMint(_msgSender(), tokenId);
 	}
 	
