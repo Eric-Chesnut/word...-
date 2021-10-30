@@ -1,6 +1,7 @@
 const { expect } = require("chai");
 
 describe("Word contract", function () {
+	this.timeout(500000);
   it("Deployment should assign the total supply of tokens to the owner", async function () {
     const [owner] = await ethers.getSigners();
 	
@@ -16,6 +17,7 @@ describe("Word contract", function () {
    
 	//expect(
     expect(await hardhatWord.ownerOf(0)).to.equal(owner.address);
+	
   });
 });
 
