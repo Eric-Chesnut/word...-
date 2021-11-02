@@ -1,7 +1,7 @@
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
- 
+ /*
 require('dotenv').config();
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-waffle");
@@ -18,4 +18,15 @@ module.exports = {
          accounts: [`0x${PRIVATE_KEY}`]
       }
    },
+};
+*/
+
+
+require("@nomiclabs/hardhat-waffle");
+
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
+module.exports = {
+  solidity: "0.8.6",
 };

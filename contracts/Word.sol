@@ -16,7 +16,7 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
     {
 		wordsMade = 0;
 		freeWords = 1;
-		_safeMint(_msgSender(), 0);
+		//_safeMint(_msgSender(), 0);
     }
 	
 	function random(string memory input) internal pure returns (uint256) {
@@ -57,6 +57,7 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	
 	//generates tokenURI, and the word along with it ***INCOMPLETE***
 	//need to fill in the A's with 4 unique random methods.
+	
 	function tokenURI(uint256 tokenId) public view override returns (string memory) {
         string[9] memory parts;
         parts[0] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 100 50"><style>.base { fill: white; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" /><text x="20" y="15" class="base">WORD...?</text>';

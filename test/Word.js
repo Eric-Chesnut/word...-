@@ -3,21 +3,21 @@ const { expect } = require("chai");
 describe("Word contract", function () {
 	this.timeout(500000);
   it("Deployment should assign the total supply of tokens to the owner", async function () {
-    const [owner] = await ethers.getSigners();
+     const [owner, addr1, addr2] = await ethers.getSigners();
 	
 	//import BasicWord from "build/Word.json";
 	
 	//const hardhatWord = deployContract("Word..?", "WORD");
 	
-    Word = await ethers.getContractFactory("Word");
+    const Word = await ethers.getContractFactory("Word");
 
     const hardhatWord = await Word.deploy("Word", "WORD");
 
-    //await hardhatWord.freeWord(0);
+    await hardhatWord.connect(owner).freeWord(0);
    
 	//expect(
     expect(await hardhatWord.ownerOf(0)).to.equal(owner.address);
-	
+	//done();
   });
 });
 
