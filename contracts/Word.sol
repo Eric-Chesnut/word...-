@@ -11,42 +11,65 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	uint32 freeWords;
 	uint32 wordsMade;
 	
-	
+	//***INCOMPLETE*** need to set freeWords to..... well more then 1 initially
 	constructor (string memory _name, string memory _symbol) ERC721(_name, _symbol) Ownable()
     {
-		wordsMade = 0;
+		wordsMade = 1;
 		freeWords = 1;
-		//_safeMint(_msgSender(), 0);
+		_safeMint(_msgSender(), 0);
     }
 	
 	function random(string memory input) internal pure returns (uint256) {
         return uint256(keccak256(abi.encodePacked(input)));
     }
 	
+	function letterOne(uint256 tokenId) public view returns (string memory) {
+		require(tokenId < wordsMade, "Word not made yet.");
+		return getALetter(tokenId, "ONE");
+	}
+	
+	function letterTwo(uint256 tokenId) public view returns (string memory) {
+		require(tokenId < wordsMade, "Word not made yet.");
+		return getALetter(tokenId, "TWO");
+	}
+	
+	function letterThree(uint256 tokenId) public view returns (string memory) {
+		require(tokenId < wordsMade, "Word not made yet.");
+		return getALetter(tokenId, "THREE");
+	}
+	
+	function letterFour(uint256 tokenId) public view returns (string memory) {
+		require(tokenId < wordsMade, "Word not made yet.");
+		return getALetter(tokenId, "FOUR");
+	}
+	
+	function freeWordsLeft() public view returns (uint 32) {
+		return freeWords;
+	}
+	
 	//uses the random function, in combination with tokenID and a string, to generate and return a letter
-	function getALetter(uint256 tokenId, string memory keyPrefix) internal view returns (uint256) {
+	//***INCOMPLETE*** only returns A, need to actually make the function
+	function getALetter(uint256 tokenId, string memory keyPrefix) internal view returns (string memory) {
         uint256 rand = random(string(abi.encodePacked(keyPrefix, toString(tokenId))));
-		return rand;
+		return "A";
 	}
 	
 	//pay to mint a word ***INCOMPLETE***
-	function buyWord(uint256 tokenId) public payable nonReentrant {
+	function buyWord() public payable nonReentrant {
 		require(msg.value > 1);
-		///deposit(msg.value);
 		payable(owner()).transfer(msg.value);
-
-		///owner.transfer(msg.value);
-		wordsMade+=1;
-		_safeMint(_msgSender(), tokenId);
+		wordsMade++;
+		_safeMint(_msgSender(), wordsMade-1);
 	}
 	
 	//mint a word for free, when free is available ***INCOMPLETE***
 	//also make it so people that already have a word can't claim free words
-	function freeWord(uint256 tokenId) public nonReentrant {
-		//require(freeWords > 0);
-		//require(balanceOf(msg.sender) == 0);
-		wordsMade+=1;
-		_safeMint(_msgSender(), tokenId);
+	function freeWord() public nonReentrant {
+		require(balanceOf(msg.sender) == 0, "Already own a word.");
+		require(freeWords > 0, "No more free words.");
+		wordsMade++;
+		freeWords--;
+		_safeMint(_msgSender(), wordsMade-1);
 	}
 	
 	//increase number of free word
@@ -60,23 +83,23 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	
 	function tokenURI(uint256 tokenId) public view override returns (string memory) {
         string[9] memory parts;
-        parts[0] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 100 50"><style>.base { fill: white; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" /><text x="20" y="15" class="base">WORD...?</text>';
+        parts[0] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 100 50"><style>.base { fill: white; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" /><text x="20" y="15" class="base">WORD...?</text><text x="15" y="40" class="base">';
 
-        parts[1] = 'A';
+        parts[1] = letterOne(tokenId);
 
-        parts[2] = '</text><text x="15" y="40" class="base">';
+        parts[2] = '</text><text x="35" y="40" class="base">';
 
-        parts[3] = 'A';
+        parts[3] = letterTwo(tokenId);
 
-        parts[4] = '</text><text x="35" y="40" class="base">';
+        parts[4] = '</text><text x="55" y="40" class="base">';
 
-        parts[5] = 'A';
+        parts[5] = letterThree(tokenId);
 
-        parts[6] = '</text><text x="55" y="40" class="base">';
+        parts[6] = '</text><text x="75" y="40" class="base">';
 
-        parts[7] = 'A';
+        parts[7] = letterFour(tokenId);
 
-        parts[8] = '</text><text x="75" y="40" class="base">';
+        parts[8] = '</text></svg>';
 
 
         string memory output = string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]));

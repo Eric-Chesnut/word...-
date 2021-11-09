@@ -1,0 +1,11 @@
+await word.freeWord();
+await word.freeWord
+word.freeWord();
+const word = await Word.attach('0xFd11782544956D04A932Cd1b4bfEB511AfAcb1f0');
+const Word = await ethers.getContractFactory('Word');
+await word.freeWord();
+await word.letterOne(0);
+await word.freeWord();
+await word.letterOne(1);
+const word = await Word.attach('0x5E832A899c574E932b40529C84224eFE4Ec35484');
+const Word = await ethers.getContractFactory('Word');
