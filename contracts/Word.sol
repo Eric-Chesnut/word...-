@@ -43,8 +43,12 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 		return getALetter(tokenId, "FOUR");
 	}
 	
-	function freeWordsLeft() public view returns (uint 32) {
+	function freeWordsLeft() public view returns (uint32) {
 		return freeWords;
+	}
+	
+	function wordsCreated() public view onlyOwner returns(uint32) {
+		return wordsMade;
 	}
 	
 	//uses the random function, in combination with tokenID and a string, to generate and return a letter

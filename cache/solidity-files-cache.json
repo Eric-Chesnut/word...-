@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\HDD Documents\\GitHub\\word...-\\contracts\\Word.sol": {
-      "lastModificationDate": 1636256909687,
-      "contentHash": "b6ada66e115986496e24e7bf5359a23c",
+      "lastModificationDate": 1636420611074,
+      "contentHash": "d6ef098c6c6204e0df6738bb8eddde23",
       "sourceName": "contracts/Word.sol",
       "solcConfig": {
         "version": "0.8.6",
