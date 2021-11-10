@@ -21,27 +21,24 @@ describe("Word contract", function () {
   
   it("User should be able to claim one and only one free word.", async function () {
     
-    await hardhatWord.connect(owner).freeWord();//owner requests free word, and receives one
+    //await hardhatWord.connect(owner).freeWord();//owner requests free word, and receives one
    
     expect(await hardhatWord.ownerOf(0)).to.equal(owner.address);//confirming it
 	
 	await expect(hardhatWord.connect(owner).freeWord()).to.be.revertedWith("Already own a word.");//owner requesting a free word while they already own a word, rejected
   });
-  
+  /*
   it("User may not receive a free word when the number of free words available is zero.", async function () {
 	await hardhatWord.connect(owner).freeWord();//owner requests free word, and receives one, decreasing freeword could to 0
 	
 	await expect(hardhatWord.connect(addr1).freeWord()).to.be.revertedWith("No more free words.");//other address requests free word, but none are available, revert
-  });
+  });*/
   
   it("Only the owner may add more free words.", async function () {
-	await hardhatWord.connect(owner).freeWord();//owner requests free word, and receives one, decreasing freeword could to 0
-	
-	await expect(hardhatWord.connect(addr1).freeWord()).to.be.reverted;//other address requests free word, but none are available, revert
 	
 	await expect(hardhatWord.connect(addr1).moreFreeWords(1)).to.be.revertedWith('caller is not the owner');//addr1 tries to add a new word, fails
 	
-	await expect(hardhatWord.connect(addr1).freeWord()).to.be.reverted;//other address requests free word, but none are available, revert
+	//await expect(hardhatWord.connect(addr1).freeWord()).to.be.reverted;//other address requests free word, but none are available, revert
 
 	await hardhatWord.connect(owner).moreFreeWords(1);//owner adds a new word
 	
@@ -53,13 +50,27 @@ describe("Word contract", function () {
   });
   
   it("Check that getting a letter works.", async function () {
-	await expect(hardhatWord.connect(addr1).letterOne(0)).to.be.revertedWith("Word not made yet.");
+	await expect(hardhatWord.connect(addr1).letterOne(1)).to.be.revertedWith("Word not made yet.");
 	
-	await hardhatWord.connect(owner).freeWord();
+	await hardhatWord.connect(addr1).freeWord();
 	
-	const letter = await hardhatWord.connect(addr1).letterOne(0);
+	const letter = await hardhatWord.connect(addr1).letterOne(1);
 	
 	expect(letter).to.equal("A");//other address requests free word, but none are available, revert
+  });
+  
+  it("Should allow people to buy words.", async function () {
+  await expect(hardhatWord.connect(owner).buyWord({value: '10000000000000'})).to.be.revertedWith("Buying a word is .01 ethereum."); //no eth, no word
+  
+  await hardhatWord.connect(addr1).buyWord({value: '10000000000000000'}) //buy a word
+  
+  expect(await hardhatWord.ownerOf(1)).to.equal(addr1.address);//confirming it
+  
+  await hardhatWord.connect(addr1).buyWord({value: '100000000000000001'}) //buy a word with MORE then you need
+  
+  expect(await hardhatWord.ownerOf(2)).to.equal(addr1.address);//confirming it
+	  
+	  //await hardhatWord.connect(owner)
   });
 });
 

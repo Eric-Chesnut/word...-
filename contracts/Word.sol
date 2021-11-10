@@ -1,5 +1,9 @@
-//word contract, make blurb up here
+//SPDX-License-Identifier: MIT
 
+/*
+Word contract, generate a 4 letter "word" (maybe) on the ethereum blockchain! Each letter is picked with around the frequency they appear in appear in the english dictionary (hence why Z is twice as likely as Q).
+Most of the "words" created will be gibberish, but if you're lucky you may just get a word, or a Q or two!
+*/
 pragma solidity 0.8.6;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -10,12 +14,34 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	
 	uint32 freeWords;
 	uint32 wordsMade;
+	string[] private letters = ["A", "A", "A", "A", "A", "A", "A", "A", 
+	"B", "B", 
+	"C", "C", "C", "C",
+	"D", "D", "D", "D", 
+	"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", 
+	"F", "F",  
+	"G", "G", "G", 
+	"H", "H", 
+	"I", "I", "I", "I", "I", "I", "I", "I", 
+	"K", 
+	"L", "L", "L", "L", "L", 
+	"M", "M", "M", 
+	"N", "N", "N", "N", "N", "N", "N", 
+	"O", "O", "O", "O", "O", "O", 
+	"P", "P", "P", 
+	"R", "R", "R", "R", "R", "R", "R", 
+	"S", "S", "S", "S", "S", "S", "S", "S", 
+	"T", "T", "T", "T", "T", "T", "T",
+	"U", "U", "U", 
+	"V", 
+	"W", 
+	"Y", "Y"]; //98 letters in here, 98% chance to get a letter from here
+	string[] private rarestLetters = ["J", "Q", "X", "Z", "Z"]; //2% chance to get one of these
 	
-	//***INCOMPLETE*** need to set freeWords to..... well more then 1 initially
 	constructor (string memory _name, string memory _symbol) ERC721(_name, _symbol) Ownable()
     {
 		wordsMade = 1;
-		freeWords = 1;
+		freeWords = 2000;
 		_safeMint(_msgSender(), 0);
     }
 	
@@ -51,24 +77,31 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 		return wordsMade;
 	}
 	
-	//uses the random function, in combination with tokenID and a string, to generate and return a letter
-	//***INCOMPLETE*** only returns A, need to actually make the function
+	//uses the random function, in combination with tokenID and a string, to return a letter
 	function getALetter(uint256 tokenId, string memory keyPrefix) internal view returns (string memory) {
         uint256 rand = random(string(abi.encodePacked(keyPrefix, toString(tokenId))));
-		return "A";
+		uint256 luck = rand % 100;
+		if(luck >= 98){
+			uint256 newRand = random(string(abi.encodePacked("LUCKY", toString(tokenId))));
+			uint256 newLuck = newRand % 5;
+			return rarestLetters[newLuck];
+		} else {
+			return letters[luck];
+		}
 	}
 	
-	//pay to mint a word ***INCOMPLETE***
+	//pay to mint a word
 	function buyWord() public payable nonReentrant {
-		require(msg.value > 1);
+		require(wordsMade < 10001, "No more words.");
+		require(msg.value >= .01 ether, "Buying a word is .01 ethereum.");
 		payable(owner()).transfer(msg.value);
 		wordsMade++;
 		_safeMint(_msgSender(), wordsMade-1);
 	}
 	
-	//mint a word for free, when free is available ***INCOMPLETE***
-	//also make it so people that already have a word can't claim free words
+	//mint a word for free
 	function freeWord() public nonReentrant {
+		require(wordsMade < 10001, "No more words.");
 		require(balanceOf(msg.sender) == 0, "Already own a word.");
 		require(freeWords > 0, "No more free words.");
 		wordsMade++;
@@ -82,9 +115,7 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	}
 	
 	
-	//generates tokenURI, and the word along with it ***INCOMPLETE***
-	//need to fill in the A's with 4 unique random methods.
-	
+	//generates tokenURI, and the word along with it 
 	function tokenURI(uint256 tokenId) public view override returns (string memory) {
         string[9] memory parts;
         parts[0] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 100 50"><style>.base { fill: white; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" /><text x="20" y="15" class="base">WORD...?</text><text x="15" y="40" class="base">';
@@ -105,10 +136,8 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 
         parts[8] = '</text></svg>';
 
-
         string memory output = string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]));
         
-
         string memory json = Base64.encode(
             bytes(
                 string(
