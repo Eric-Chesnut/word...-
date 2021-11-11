@@ -1,7 +1,9 @@
 //SPDX-License-Identifier: MIT
 
 /*
-Word contract, generate a 4 letter "word" (maybe) on the ethereum blockchain! Each letter is picked with around the frequency they appear in appear in the english dictionary (hence why Z is twice as likely as Q).
+Word contract, generate a 4 letter "word" (maybe) on the ethereum blockchain! 
+Each letter is picked with around the frequency they appear in appear in the english dictionary (hence why Z is twice as likely as Q).
+The "word" doesn't exist until you claim it!
 Most of the "words" created will be gibberish, but if you're lucky you may just get a word, or a Q or two!
 */
 pragma solidity 0.8.6;
