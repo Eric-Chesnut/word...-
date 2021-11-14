@@ -3,7 +3,7 @@ require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 
-const { API_KEY, PRIVATE_KEY, API_KEY_RINK, ETHERSCAN_API_KEY, API_KEY_MAIN} = process.env;
+const { API_KEY, PRIVATE_KEY, API_KEY_RINK, ETHERSCAN_API_KEY, API_KEY_MAIN, API_KEY_POLY, POLYSCAN_API_KEY} = process.env;
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -19,11 +19,19 @@ module.exports = {
       accounts: [`0x${PRIVATE_KEY}`]
     },
 	mainnet: {
-    url: 'https://eth-mainnet.alchemyapi.io/v2/${API_KEY_MAIN}', 
+	url: `https://eth-mainnet.alchemyapi.io/v2/${API_KEY_MAIN}`, 
     accounts: [`0x${PRIVATE_KEY}`]
-    }
+	//gasPrice: 0xF2C0BED7757
+    },
+	polygon: {
+	url: `https://polygon-mainnet.g.alchemy.com/v2/${API_KEY_POLY}`, 
+    accounts: [`0x${PRIVATE_KEY}`]
+	}
   },
   etherscan: {
-    apiKey: ETHERSCAN_API_KEY
+    apiKey: POLYSCAN_API_KEY
+  },
+  polyscan: {
+	  apiKey: POLYSCAN_API_KEY
   }
 };
