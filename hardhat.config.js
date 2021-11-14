@@ -1,33 +1,9 @@
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
- /*
-require('dotenv').config();
-require("@nomiclabs/hardhat-ethers");
-require("@nomiclabs/hardhat-waffle");
-
-const { API_URL, PRIVATE_KEY } = process.env;
-
-module.exports = {
-  solidity: "0.8.6",
-  defaultNetwork: "ropsten",
-   networks: {
-      hardhat: {},
-      ropsten: {
-         url: API_URL,
-         accounts: [`0x${PRIVATE_KEY}`]
-      }
-   },
-};
-*/
-
-
 require('dotenv').config();
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 
-const { API_KEY, PRIVATE_KEY, API_KEY_RINK, ETHERSCAN_API_KEY } = process.env;
+const { API_KEY, PRIVATE_KEY, API_KEY_RINK, ETHERSCAN_API_KEY, API_KEY_MAIN} = process.env;
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -41,6 +17,10 @@ module.exports = {
 	rinkeby: {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${API_KEY_RINK}`,
       accounts: [`0x${PRIVATE_KEY}`]
+    },
+	mainnet: {
+    url: 'https://eth-mainnet.alchemyapi.io/v2/${API_KEY_MAIN}', 
+    accounts: [`0x${PRIVATE_KEY}`]
     }
   },
   etherscan: {

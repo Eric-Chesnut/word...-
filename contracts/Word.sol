@@ -1,9 +1,11 @@
 //SPDX-License-Identifier: MIT
 
 /*
-Word contract, generate a 4 letter "word" (maybe) on the ethereum blockchain! 
+Word contract, generate a 4 letter "word" (maybe) on the ethereum blockchain!
+Use the result however you see fit. 
 Each letter is picked with around the frequency they appear in appear in the english dictionary (hence why Z is twice as likely as Q).
 The "word" doesn't exist until you claim it!
+456976 possible combinations, but only 10001 will be created.
 Most of the "words" created will be gibberish, but if you're lucky you may just get a word, or a Q or two!
 */
 pragma solidity 0.8.6;
@@ -182,7 +184,7 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	
 }
 
-
+//MIT license
 library Base64 {
     bytes internal constant TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
