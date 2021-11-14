@@ -97,7 +97,7 @@ contract Word is ERC721Enumerable, ReentrancyGuard, Ownable {
 	//pay to mint a word
 	function buyWord() public payable nonReentrant {
 		require(wordsMade < 10001, "No more words.");
-		require(msg.value >= 20, "Buying a word is 20 MATIC.");
+		require(msg.value >= 20 ether, "Buying a word is 20 MATIC.");
 		payable(owner()).transfer(msg.value);
 		wordsMade++;
 		_safeMint(_msgSender(), wordsMade-1);
