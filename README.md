@@ -1,4 +1,6 @@
-# word...-
+# Word...-
+![Word0](https://user-images.githubusercontent.com/51245652/144696024-ca9bc060-0816-41db-b3ff-b617094e7ddd.png)
+
 Word contract, generate a 4 letter "word" (maybe) on the polygon blockchain!
 Use the result however you see fit. 
 Each letter is picked with around the frequency they appear in appear in the english dictionary (hence why Z is twice as likely as Q).
