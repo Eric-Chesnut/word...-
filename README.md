@@ -4,7 +4,7 @@
 
 # Word...
 
-A simple ERC 721 smart contract I implemented. It generates a 4 letter "word" on the polygon blockchain. Each letter is picked with around the frequency they appear in appear in the english dictionary (hence why Z is twice as likely as Q). It then takes those letters and encodes them in a svg url which opensea.io uses to generate an image. 
+A simple ERC 721 smart contract I implemented. It generates a 4 letter "word" on the polygon blockchain. Each letter is picked with around the frequency they appear in appear in the english dictionary (hence why Z is twice as likely as Q). It then takes those letters and encodes them in a SVG URL which opensea.io uses to generate an image. 
 I tested a couple of features in the contract including accepting payment, allowing users to mint NFT's, allowing a dynamic number to be claimed for free, and more. The "word" doesn't exist until you it is claimed. 456976 possible combinations. Most of the "words" created will be gibberish. 
 
 
